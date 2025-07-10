@@ -16,6 +16,10 @@ run/main_scene="uid://dq5d15xyky117"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://bmfucomdpdf7u"
 
+[autoload]
+
+GameManager="*res://scripts/GameManager.gd"
+
 [input]
 
 "Move Left"={
