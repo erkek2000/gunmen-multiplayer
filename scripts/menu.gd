@@ -1,4 +1,6 @@
 extends Control
+
+# Can be 0.0.0.0 for global testing.
 @export var Adress = "127.0.0.1"
 @export var Port = 8910
 var Peer
@@ -9,6 +11,8 @@ func _ready():
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.connection_failed.connect(connection_failed)
+	if "--server" in OS.get_cmdline_args():
+		hostGame()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -21,7 +25,13 @@ func peer_connected(id):
 # Gets called on server and clients
 func peer_disconnected(id):
 	print("Player Disconnected: ", id)
+	GameManager.Players.erase(id)
+	var players = get_tree().get_nodes_in_group("Player")
+	for i in players:
+		if i.name == str(id):
+			i.queue_free()
 	
+# Why use rpc_id here?????????????????????
 # Called only from clients
 func connected_to_server():
 	print("Connected to Server!")
@@ -52,8 +62,8 @@ func startGame():
 	var scene = load("res://scenes/Test_Scene.tscn").instantiate()
 	get_tree().root.add_child(scene)
 	self.hide()
-
-func _on_host_button_pressed():
+	
+func hostGame():
 	Peer = ENetMultiplayerPeer.new()
 	# Max clients = 2
 	var error = Peer.create_server(Port, 2)
@@ -67,11 +77,19 @@ func _on_host_button_pressed():
 	multiplayer.set_multiplayer_peer(Peer)
 	print("Waiting for players...")
 	
+
+	
+
+func _on_host_button_pressed():
+	hostGame()
 	# Add the host player to the dictionary
 	var host_name = $VBoxContainer/LineEdit.text
 	if host_name == "":
 		host_name = "Host"
 	sendPlayerInfo(host_name, multiplayer.get_unique_id())
+	var server_name = host_name + "'s Server"
+	$ServerBrowser.setUpBroadcast(server_name)
+
 
 func _on_join_button_pressed():
 	Peer = ENetMultiplayerPeer.new()

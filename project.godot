@@ -11,14 +11,22 @@ config_version=5
 [application]
 
 config/name="Gunmen Multiplayer"
-config/tags=PackedStringArray("2d", "network", "prototype")
-run/main_scene="uid://dq5d15xyky117"
+config/tags=PackedStringArray("2d", "memo", "network", "prototype")
+run/main_scene="uid://dygnsu35pmuh2"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="uid://bmfucomdpdf7u"
 
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
+
+[file_customization]
+
+folder_colors={
+"res://scenes/": "pink",
+"res://scripts/": "yellow",
+"res://sprites/": "blue"
+}
 
 [input]
 

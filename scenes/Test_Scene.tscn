@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://dq5d15xyky117"]
+[gd_scene load_steps=11 format=3 uid="uid://dq5d15xyky117"]
 
 [ext_resource type="PackedScene" uid="uid://cwg7tp6u6or2h" path="res://scenes/Player.tscn" id="1_2td76"]
+[ext_resource type="Script" uid="uid://b3kp6qsfprtfx" path="res://scripts/testScene.gd" id="1_6tmie"]
 [ext_resource type="Texture2D" uid="uid://dyxlys4w8myfs" path="res://sprites/Cyberpunk platformer - World starter/tileset/main_tileset.png" id="3_7vkri"]
 [ext_resource type="Texture2D" uid="uid://dtem41nqf7mbk" path="res://sprites/Cyberpunk platformer - World starter/buildings/building_03.png" id="3_hidhg"]
 [ext_resource type="Texture2D" uid="uid://csodqdpttfpow" path="res://sprites/Cyberpunk platformer - World starter/buildings/building_05.png" id="4_6tmie"]
@@ -403,6 +404,8 @@ sources/0 = SubResource("TileSetAtlasSource_2d3od")
 size = Vector2(1004, 15)
 
 [node name="TestScene" type="Node2D"]
+script = ExtResource("1_6tmie")
+PlayerScene = ExtResource("1_2td76")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_qu7ve")
@@ -461,11 +464,11 @@ metadata/_edit_lock_ = true
 
 [node name="SpawnPoints" type="Node2D" parent="."]
 
-[node name="1" type="Node2D" parent="SpawnPoints"]
+[node name="1" type="Node2D" parent="SpawnPoints" groups=["SpawnPoints"]]
 position = Vector2(322, 340)
 
-[node name="2" type="Node2D" parent="SpawnPoints"]
+[node name="2" type="Node2D" parent="SpawnPoints" groups=["SpawnPoints"]]
 position = Vector2(855, 488)
 
-[node name="Player" parent="." instance=ExtResource("1_2td76")]
-position = Vector2(431, 132)
+[node name="3" type="Node2D" parent="SpawnPoints" groups=["SpawnPoints"]]
+position = Vector2(641, 235)

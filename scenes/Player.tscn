@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cwg7tp6u6or2h"]
+[gd_scene load_steps=22 format=3 uid="uid://cwg7tp6u6or2h"]
 
 [ext_resource type="Texture2D" uid="uid://bkyeshn5spldy" path="res://sprites/Male Protagonist - Neon City/Main Character - Male - Full spritesheet - No Guide.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://ctn2tq3iiy3rb" path="res://scripts/player.gd" id="1_qhqgy"]
@@ -119,11 +119,38 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qfm1y"]
 size = Vector2(13, 17)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mdl7e"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("GunRotation:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimatedSprite2D:animation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 texture_filter = 1
 scale = Vector2(3, 3)
 script = ExtResource("1_qhqgy")
 bullet = ExtResource("2_mdl7e")
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -17.0
+offset_top = -29.6667
+offset_right = 86.0
+offset_bottom = 3.33333
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.33, 0.33)
+size_flags_horizontal = 6
+text = "Player Name"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
@@ -146,3 +173,6 @@ texture = ExtResource("2_g2els")
 
 [node name="BulletSpawn" type="Node2D" parent="GunRotation"]
 position = Vector2(21.4992, -0.18762)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mdl7e")
