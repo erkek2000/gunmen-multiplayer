@@ -151,6 +151,7 @@ grow_vertical = 2
 scale = Vector2(0.33, 0.33)
 size_flags_horizontal = 6
 text = "Player Name"
+horizontal_alignment = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)

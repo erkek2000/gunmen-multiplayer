@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm7xvpx4b4lt"]
+
+[ext_resource type="Script" uid="uid://bda3py44i1603" path="res://scripts/server_info_container.gd" id="1_nvn2u"]
+
+[node name="ServerInfoContainer" type="HBoxContainer"]
+script = ExtResource("1_nvn2u")
+
+[node name="ServerNameLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Server Name"
+
+[node name="ServerIPLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Server IP"
+
+[node name="PlayerCountLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player Count"
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join"
+
+[connection signal="pressed" from="JoinButton" to="." method="_on_button_pressed"]

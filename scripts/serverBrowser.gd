@@ -1,7 +1,8 @@
 extends Control
 
-signal server_found
-signal server_removed
+signal server_found(ip, port, roomInfo)
+signal server_removed(ip)
+signal joinGame(ip)
 
 var broadcastTimer : Timer
 var broadcaster : PacketPeerUDP
@@ -9,6 +10,7 @@ var listener : PacketPeerUDP
 @export var listenPort : int = 8911
 @export var broadcastPort: int = 8912
 @export var broadcastAddress: String = "192.168.1.255"
+@export var serverInfo: PackedScene
 
 var roomInfo = {"name" : "name", "playerCount" : 0}
 
@@ -59,7 +61,20 @@ func _process(delta):
 		
 		print("Server IP: ", serverip,
 		" Server Port: ", serverport, " Room Info: ", roomInfo)
-
+	
+		for i in %ServerListContainer.get_children():
+			if i.name == roomInfo.name:
+				i.get_node("ServerIPLabel").text = str(serverip)
+				i.get_node("PlayerCountLabel").text = str(int(roomInfo.playerCount))
+				return
+				
+		var currentInfo = serverInfo.instantiate()
+		currentInfo.name = roomInfo.name
+		currentInfo.get_node("ServerNameLabel").text = roomInfo.name
+		currentInfo.get_node("ServerIPLabel").text = serverip
+		currentInfo.get_node("PlayerCountLabel").text = str(int(roomInfo.playerCount))
+		%ServerListContainer.add_child(currentInfo)
+		currentInfo.joinGame.connect(joinByIp)
 
 func _on_broadcast_timer_timeout():
 	print("Broadcasting game.")
@@ -80,3 +95,6 @@ func cleanUp():
 
 func _exit_tree():
 	cleanUp()
+	
+func joinByIp(ip):
+	joinGame.emit(ip)

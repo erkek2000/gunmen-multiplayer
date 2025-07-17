@@ -1,7 +1,7 @@
 extends Control
 
 # Can be 0.0.0.0 for global testing.
-@export var Adress = "127.0.0.1"
+@export var Address = "127.0.0.1"
 @export var Port = 8910
 var Peer
 
@@ -13,6 +13,7 @@ func _ready():
 	multiplayer.connection_failed.connect(connection_failed)
 	if "--server" in OS.get_cmdline_args():
 		hostGame()
+	$ServerBrowser.joinGame.connect(joinByIp)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -92,10 +93,15 @@ func _on_host_button_pressed():
 
 
 func _on_join_button_pressed():
+	joinByIp(Address)
+
+	
+func joinByIp(ip):
 	Peer = ENetMultiplayerPeer.new()
-	Peer.create_client(Adress, Port)
+	Peer.create_client(ip, Port)
 	Peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(Peer)
+	
 
 func _on_start_button_pressed():
 	startGame.rpc()
